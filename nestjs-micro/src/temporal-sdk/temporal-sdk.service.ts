@@ -1,10 +1,22 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
+import { Client } from '@temporalio/client';
 
 @Injectable()
-export class TemporalSdkService {
-  constructor(private readonly logger: Logger) {}
+export class TemporalSdkService implements OnModuleInit {
+  private client: Client;
+  private readonly logger = new Logger(TemporalSdkService.name);
 
-  private async get<T>(firstParam: T): Promise<T> {
-    return firstParam;
+  async onModuleInit() {
+    this.client = new Client();
+    this.logger.log('Temporal client initialized');
+  }
+
+  async startWorkflow() {
+    const handle = await this.client.workflow.start('testWorkflow', {
+      taskQueue: 'example',
+      workflowId: 'example',
+      args: ['Hello, Temporal!'],
+    });
+    return handle.result();
   }
 }
