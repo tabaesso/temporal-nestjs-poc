@@ -6,7 +6,7 @@ import { randomUUID } from "crypto";
 export class IndexController {
   public async startWorkflow(req: Request, res: Response): Promise<void> {
     const client = new Client();
-    const result = await client.workflow.execute<any>(greeting, {
+    const result = await client.workflow.execute(greeting, {
       args: [req.params.name],
       taskQueue: 'hello-world',
       workflowId: 'workflow-' + randomUUID(),
