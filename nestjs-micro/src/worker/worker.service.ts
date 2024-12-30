@@ -26,8 +26,8 @@ export class WorkerService implements OnModuleInit, OnModuleDestroy {
   }
 
   async onModuleDestroy() {
-    await this.worker.shutdown();
-    await this.multiServiceWorker.shutdown();
+    if (this.worker.getState() === 'RUNNING') await this.worker.shutdown();
+    if (this.multiServiceWorker.getState() === 'RUNNING') await this.multiServiceWorker.shutdown();
     console.log('Temporal Worker shut down');
   }
 }

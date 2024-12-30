@@ -11,6 +11,11 @@ export class TemporalSdkService implements OnModuleInit {
     this.logger.log('Temporal client initialized');
   }
 
+  async onModuleDestroy() {
+    await this.client.connection.close();
+    this.logger.log('Temporal client closed');
+  }
+
   async startWorkflow() {
     const handle = await this.client.workflow.start('exampleWorkflow', {
       taskQueue: 'example',
