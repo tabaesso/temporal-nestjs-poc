@@ -19,4 +19,19 @@ export class TemporalSdkService implements OnModuleInit {
     });
     return handle.result();
   }
+
+  async startMultiserviceWorkflow(input: string) {
+    console.log('Workflow started.');
+    const handle = await this.client.workflow.start('multiserviceWorkflow', {
+      taskQueue: 'multiservice',
+      workflowId: 'multiservice2',
+      args: [input],
+    });
+    
+   return handle.result();
+  }
+
+
+    
+
 }
