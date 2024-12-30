@@ -6,7 +6,9 @@
   "scripts": {
     "build": "tsc",
     "start": "node dist/app.js",
-    "dev": "ts-node src/app.ts"
+    "dev": "ts-node src/app.ts",
+    "worker": "ts-node src/worker.ts",
+    "worker.watch": "nodemon src/worker.ts"
   },
   "dependencies": {
     "@temporalio/activity": "^1.11.5",
