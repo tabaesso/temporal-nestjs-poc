@@ -12,7 +12,7 @@ export class TemporalSdkService implements OnModuleInit {
   }
 
   async startWorkflow() {
-    const handle = await this.client.workflow.start('testWorkflow', {
+    const handle = await this.client.workflow.start('exampleWorkflow', {
       taskQueue: 'example',
       workflowId: 'example',
       args: ['Hello, Temporal!'],

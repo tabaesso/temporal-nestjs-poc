@@ -6,6 +6,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
 import { Users } from './users/users.entity';
 import { UsersModule } from './users/users.module';
+import { WorkerModule } from './worker/worker.module';
 
 @Module({
   imports: [
@@ -21,10 +22,11 @@ import { UsersModule } from './users/users.module';
       synchronize: false,
     }),
     UsersModule,
+    WorkerModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule {
-  constructor(private dataSource: DataSource) {}
+  constructor(private dataSource: DataSource) { }
 }
