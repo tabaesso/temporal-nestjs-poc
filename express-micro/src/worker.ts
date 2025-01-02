@@ -1,6 +1,8 @@
 import { Worker } from '@temporalio/worker';
 import { MultiserviceActivities } from './activities/multiservice-activities';
 
+let worker: Worker;
+
 const activities: MultiserviceActivities = {
   async ConvertStringToNumber(input: string): Promise<number> {
     console.log('ConvertStringToNumber');
@@ -21,16 +23,14 @@ const activities: MultiserviceActivities = {
   },
 
   async KillWorker(): Promise<void> {
-    setImmediate(() => {
-      process.exit(0);
-    });
+    await worker.shutdown();
 
     return;
   }
 };
 
 async function run() {
-  const worker = await Worker.create({
+  worker = await Worker.create({
     activities,
     taskQueue: 'multiservice',
   });
