@@ -4,24 +4,17 @@ import { MultiserviceActivities } from './activities/multiservice-activities';
 let worker: Worker;
 
 const activities: MultiserviceActivities = {
-  async ConvertStringToNumber(input: string): Promise<number> {
-    console.log('ConvertStringToNumber');
-    console.log(input);
-    return parseInt(input);
-  },
-
-  async ConvertNumberToString(input: number): Promise<string> {
+  async ConvertStringToArrayList(input: string): Promise<string[]> {
     worker.shutdown();
-    console.log(input);
-    console.log('ConvertNumberToString');
-    return input.toString();
+
+    return input.split('');
   },
 };
 
 async function run() {
   worker = await Worker.create({
     activities,
-    taskQueue: 'multiservice-one',
+    taskQueue: 'multiservice-two',
   });
 
   await worker.run();

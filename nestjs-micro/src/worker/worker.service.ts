@@ -17,6 +17,7 @@ export class WorkerService implements OnModuleInit, OnModuleDestroy {
 
     this.multiServiceWorker = await Worker.create({
       workflowsPath: require.resolve('../workflows/multiservice.workflow'),
+      // this queue needs to be the same as workflow.start
       taskQueue: 'multiservice',
     });
 

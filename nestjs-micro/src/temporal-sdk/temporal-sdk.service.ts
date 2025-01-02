@@ -28,6 +28,7 @@ export class TemporalSdkService implements OnModuleInit {
   async startMultiserviceWorkflow(input: string) {
     console.log('Workflow started.');
     const handle = await this.client.workflow.start('multiserviceWorkflow', {
+      // this queue only decides where the worker that starts the workflow the one with workflowsPath needs to be listening
       taskQueue: 'multiservice',
       workflowId: 'multiservice2',
       args: [input],

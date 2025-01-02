@@ -1,9 +1,16 @@
 import { proxyActivities } from "@temporalio/workflow";
 import type { MultiserviceActivities } from "../activities/multiservice-activities";
 
-const { ConvertStringToNumber, ConvertNumberToString, ConvertStringToArrayList, KillWorker } = proxyActivities<MultiserviceActivities>({
+const { ConvertStringToNumber, ConvertNumberToString } = proxyActivities<MultiserviceActivities>({
   startToCloseTimeout: "1 minute",
-  taskQueue: "multiservice",
+  // this queue decides which queue the worker needs to listen to
+  taskQueue: "multiservice-one",
+});
+
+const { ConvertStringToArrayList } = proxyActivities<MultiserviceActivities>({
+  startToCloseTimeout: "5s",
+  // this queue decides which queue the worker needs to listen to
+  taskQueue: "multiservice-two",
 });
 
 export async function multiserviceWorkflow(input: string): Promise<string[]> {
@@ -14,7 +21,6 @@ export async function multiserviceWorkflow(input: string): Promise<string[]> {
   console.log("Here we updated the DB as activity 2 finished");
   const arrayList = await ConvertStringToArrayList(string);
   console.log("Here we updated the DB as activity 3 finished");
-  await KillWorker();
 
   return arrayList;
 }
